@@ -43,4 +43,12 @@ public class PlayerController : MonoBehaviour
 
         GameManager.Instance.EndGame();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Punch"))
+        {
+            GetDamage(10.0f);
+        }
+    }
 }

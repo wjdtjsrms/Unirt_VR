@@ -36,7 +36,7 @@ public class MovementProvider : MonoBehaviour
     void PositionController()
     {
         // 부드러운 이동을 위해서 1(최소) 2(최대)에서 head의 y 값이 결정 되도록 함! 
-        float headHeight = Mathf.Clamp(head.transform.localPosition.y, 1, 2);
+        float headHeight = Mathf.Clamp(head.transform.localPosition.y, 0.1f, 0.1f);
         characterController.height = headHeight;  
 
         Vector3 newCenter = Vector3.zero;

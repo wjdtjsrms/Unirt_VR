@@ -6,7 +6,7 @@ public class PlayerBullet : MonoBehaviour
 {
 
     [SerializeField]
-    private float attackMount = 35.0f;
+    private float attackAmount = 35.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,13 @@ public class PlayerBullet : MonoBehaviour
         if(other.CompareTag("Monster"))
         {
             BulletSpawner bulletSpawner = other.GetComponent<BulletSpawner>();
-            bulletSpawner?.GetDamage(attackMount);
+            bulletSpawner?.GetDamage(attackAmount);
+            Destroy(gameObject);
+        }
+        if (other.CompareTag("Monster2"))
+        {
+            MonsterCtrl ailen = other.GetComponent<MonsterCtrl>();
+            ailen?.GetDamage(attackAmount);
             Destroy(gameObject);
         }
     }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.XR.Interaction.Toolkit;
 public class GunShoot : MonoBehaviour
 {
     public GameObject bulletPrefab;
@@ -18,10 +18,12 @@ public class GunShoot : MonoBehaviour
     public AudioClip fireClip; // 총 발사 사운드 클립
     AudioSource fireAudio; // 발사 사운드를 재생할 오디오소스 컴포넌트
 
+    public HandState currentGrab; // CustomController에서 정의한다.
+
     // Start is called before the first frame update
     void Start()
     {
-        if(barrelLocation == null)
+        if (barrelLocation == null)
         {
             barrelLocation = transform;
         }
@@ -41,6 +43,29 @@ public class GunShoot : MonoBehaviour
     {
         isGrab = false;
     }
+
+    public void SetGrapState(HandState state)
+    {
+        currentGrab = state;
+    }
+
+    public void SetGrapNone()
+    {
+        if (!GetComponent<XRGrabInteractable>().isSelected)
+        {
+            currentGrab = HandState.NONE;
+        }
+    }
+
+    public void SetGrapLeft()
+    {
+        currentGrab = HandState.LEFT;
+    }
+    public void SetGrapRight()
+    {
+        currentGrab = HandState.RIGHT;
+    }
+
     public void Shoot()
     {
         if(isGrab == true) // 총을 잡았을때만 사격

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
+public enum HandState {NONE =0,RIGHT,LEFT };
 public class CustomController : MonoBehaviour
 {
     // device 특성값을 담는 변수
@@ -20,7 +21,9 @@ public class CustomController : MonoBehaviour
 
     public GameObject handGun; // 총 모델
 
-    bool triggerButton;
+    bool triggerButton; // 총알 단발 발사용 불리언
+
+    public HandState currentHand; // 현재 오른손,왼손인지 알기 위한 변수
 
     void Start()
     {
@@ -53,7 +56,7 @@ public class CustomController : MonoBehaviour
             bool triggerButtonValue;
             if(availableDevice.TryGetFeatureValue(CommonUsages.triggerButton,out triggerButtonValue) && triggerButtonValue)
             {
-                if(triggerButton == false) // 트리거 버튼이 눌리지 않은 상태에서만 발사된다.
+                if(triggerButton == false && currentHand == handGun.GetComponent<GunShoot>().currentGrab) // 트리거 버튼이 눌리지 않은 상태에서만 발사된다.
                 {
                     handGun.GetComponent<GunShoot>().Shoot();
                     triggerButton = true;
@@ -89,20 +92,25 @@ public class CustomController : MonoBehaviour
         if(devices.Count > 0)
         {
             availableDevice = devices[0];
-            string name = "";
+            GameObject currentControllerModel;
 
-
-            if("Oculus Touch Controller - Left" == availableDevice.name)
+            // Left 및 Right에 따라서 컨트롤의 손을 각각 설정
+            if(availableDevice.name.Contains("Left"))
             {
-                name = "Oculus Quest Controller - Left";
+                currentControllerModel = controllerModels[1];
+                currentHand = HandState.LEFT;
             }
-            else if ("Oculus Touch Controller - Right" == availableDevice.name)
+            else if(availableDevice.name.Contains("Right"))
             {
-                name = "Oculus Quest Controller - Right";
-            }
+                currentControllerModel = controllerModels[2];
+                currentHand = HandState.RIGHT;
 
-            // availableDevice 이름과 일치하는 controllerModels의 원소가 있다면 대입한다.
-            GameObject currentControllerModel = controllerModels.Find(controller => controller.name == name);
+            }
+            else
+            {
+                currentControllerModel = null;
+                currentHand = HandState.NONE;
+            }
             if(currentControllerModel)
             {
                 controllerInstance = Instantiate(currentControllerModel, transform);
