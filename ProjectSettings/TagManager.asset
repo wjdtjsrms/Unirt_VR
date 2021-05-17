@@ -7,11 +7,12 @@ TagManager:
   - Monster
   - Monster2
   - Punch
+  - Sword
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Grab Ignore Ray
   - Water
   - UI
   - 

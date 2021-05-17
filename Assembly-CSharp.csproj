@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\CustomController.cs" />
     <Compile Include="Assets\Import Package\Gun\Modern Guns - Handgun\_Demo Assets\SimpleShoot.cs" />
     <Compile Include="Assets\Import Package\DodgeQuest\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\MonsterCtrl.cs" />
     <Compile Include="Assets\Import Package\DodgeQuest\Bullet.cs" />
     <Compile Include="Assets\Scripts\PlayerBullet.cs" />
     <Compile Include="Assets\Import Package\DodgeQuest\BulletSpawner.cs" />
@@ -66,7 +67,7 @@
     <Compile Include="Assets\Scripts\MovementProvider.cs" />
     <Compile Include="Assets\Scripts\MenuUI.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\MonsterCtrl.cs" />
+    <Compile Include="Assets\Scripts\Sword.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Import Package\Gun\Modern Guns - Handgun\README.txt" />
