@@ -6,11 +6,19 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class MovementProvider : MonoBehaviour
 {
+    public enum MoveType
+    {
+        FreeMove = 0,
+        GoFront
+    }
+
     public float speed = 1.0f; // 이동 속도
     public float gravityMultiplier = 1.0f; // 중력에 영향을 받는 경우를 처리
     public List<XRController> controllers = null; // 컨트롤러 리스트 (상황에 따라서 1개 혹은 n개가 설정 될 수 있다.)
     private CharacterController characterController = null; // VR Rig의 캐릭터 컨트롤러
     private GameObject head = null; // 카메라의 헤드 위치
+    public MoveType moveType = MoveType.FreeMove; //  플레이어 이동 방식 설정
+
 
     private void Awake() // 스크립트 실행시 가장 먼저 한번 실행, setActive(false) 상태여도 실행 된다.
     {
@@ -29,15 +37,26 @@ public class MovementProvider : MonoBehaviour
     void Update()
     {
         PositionController(); // 현재 위치에 맞게 위치를 설정함
-        CheckForInput(); // 설정된 컨트롤러 중에서 인풋 입력이 있다면 이동처리를 함
-        ApplyGravity(); // 밑으로 떨어지는 경우 중력을 작용
-    }
 
+        if(moveType == MoveType.FreeMove)
+        {
+            FreeMove(); // 설정된 컨트롤러 중에서 인풋 입력이 있다면 이동처리를 함
+        }
+        else if (moveType == MoveType.GoFront)
+        {
+            GoFront(); // Z축 방향으로 이동함
+        }
+    }
+    void GoFront()
+    {
+        Vector3 movement = Vector3.forward * speed;
+        characterController.Move(movement * Time.deltaTime);
+    }
     void PositionController()
     {
         // 부드러운 이동을 위해서 1(최소) 2(최대)에서 head의 y 값이 결정 되도록 함! 
         float headHeight = Mathf.Clamp(head.transform.localPosition.y, 0.1f, 0.1f);
-        characterController.height = headHeight;  
+        characterController.height = headHeight;
 
         Vector3 newCenter = Vector3.zero;
         newCenter.x = head.transform.localPosition.x;
@@ -46,11 +65,11 @@ public class MovementProvider : MonoBehaviour
         characterController.center = newCenter; // 캐릭터의 위치는 머리의 x,z 좌표
     }
 
-    void CheckForInput()
+    void FreeMove()
     {
-        foreach(XRController controller in controllers)
+        foreach (XRController controller in controllers)
         {
-            if(controller.enableInputActions) // 컨트롤러에서 액션이 발생했다면
+            if (controller.enableInputActions) // 컨트롤러에서 액션이 발생했다면
             {
                 CheckForMovement(controller.inputDevice);
             }
@@ -60,7 +79,7 @@ public class MovementProvider : MonoBehaviour
     void CheckForMovement(InputDevice device)
     {
         // 레버는 primary2DAxis 값으로 읽어 올수 있다.
-        if (device.TryGetFeatureValue(CommonUsages.primary2DAxis,out Vector2 position))
+        if (device.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 position))
         {
             StartMove(position);
         }
@@ -74,13 +93,5 @@ public class MovementProvider : MonoBehaviour
 
         Vector3 movement = direction * speed;
         characterController.Move(movement * Time.deltaTime);
-    }
-    void ApplyGravity()
-    {
-        // 떨어지고 있는 상황에서 중력이 적용된 벡터
-        Vector3 gravity = new Vector3(0, Physics.gravity.y * gravityMultiplier, 0);
-        gravity.y += Time.deltaTime;
-
-        characterController.Move(gravity * Time.deltaTime);
     }
 }

@@ -2,14 +2,14 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CustomController
+    - DeveloperOption
+    - DisplayFPS
     - GameManager
     - GunShoot
     - MenuUI
-    - MonsterCtrl
     - MovementProvider
     - PlayerBullet
     - PlayerController
-    - Sword
     Unity.InputSystem.dll:
     - UnityEngine.InputSystem.InputActionAsset
     - UnityEngine.InputSystem.InputActionReference
@@ -17,15 +17,13 @@ ScriptsOnlyBuild:
     - UnityEngine.InputSystem.InputSystemObject
     - UnityEngine.InputSystem.RemoteInputPlayerConnection
     - UnityEngine.InputSystem.UI.InputSystemUIInputModule
-    - UnityEngine.InputSystem.UI.TrackedDeviceRaycaster
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.XR.Interaction.Toolkit.dll:
     - UnityEngine.XR.Interaction.Toolkit.DeviceBasedSnapTurnProvider
     - UnityEngine.XR.Interaction.Toolkit.LocomotionSystem
-    - UnityEngine.XR.Interaction.Toolkit.TeleportationAnchor
-    - UnityEngine.XR.Interaction.Toolkit.TeleportationArea
-    - UnityEngine.XR.Interaction.Toolkit.TeleportationProvider
+    - UnityEngine.XR.Interaction.Toolkit.UI.TrackedDeviceGraphicRaycaster
+    - UnityEngine.XR.Interaction.Toolkit.UI.XRUIInputModule
     - UnityEngine.XR.Interaction.Toolkit.XRController
     - UnityEngine.XR.Interaction.Toolkit.XRDirectInteractor
     - UnityEngine.XR.Interaction.Toolkit.XRGrabInteractable
@@ -33,7 +31,6 @@ ScriptsOnlyBuild:
     - UnityEngine.XR.Interaction.Toolkit.XRInteractorLineVisual
     - UnityEngine.XR.Interaction.Toolkit.XRRayInteractor
     - UnityEngine.XR.Interaction.Toolkit.XRRig
-    - UnityEngine.XR.Interaction.Toolkit.XRSocketInteractor
     Unity.XR.Management.Editor.dll:
     - UnityEditor.XR.Management.XRGeneralSettingsPerBuildTarget
     Unity.XR.Management.dll:
@@ -42,13 +39,6 @@ ScriptsOnlyBuild:
     Unity.XR.Oculus.dll:
     - Unity.XR.Oculus.OculusLoader
     - Unity.XR.Oculus.OculusSettings
-    UnityEditor.Graphs.dll:
-    - UnityEditor.Graphs.AnimationBlendTree.Graph
-    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
-    - UnityEditor.Graphs.AnimationStateMachine.Graph
-    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -57,8 +47,10 @@ ScriptsOnlyBuild:
     - UnityEngine.SpatialTracking.TrackedPoseDriver
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
     - UnityEngine.UI.Shadow
     - UnityEngine.UI.Text
   sceneClasses:
@@ -110,19 +102,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1454}
     - Class: 114
+      Script: {instanceID: 1506}
+    - Class: 114
       Script: {instanceID: 1684}
     - Class: 114
       Script: {instanceID: 1718}
     - Class: 114
       Script: {instanceID: 1792}
     - Class: 114
-      Script: {instanceID: 1910}
-    - Class: 114
-      Script: {instanceID: 1946}
-    - Class: 114
       Script: {instanceID: 2064}
-    - Class: 114
-      Script: {instanceID: 2136}
     - Class: 114
       Script: {instanceID: 2190}
     - Class: 114
@@ -136,41 +124,43 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2668}
     - Class: 114
-      Script: {instanceID: 2692}
-    - Class: 114
       Script: {instanceID: 2808}
     - Class: 114
-      Script: {instanceID: 3238}
+      Script: {instanceID: 2972}
     - Class: 114
-      Script: {instanceID: 3284}
+      Script: {instanceID: 3228}
     - Class: 114
-      Script: {instanceID: 3308}
+      Script: {instanceID: 3240}
     - Class: 114
-      Script: {instanceID: 3340}
+      Script: {instanceID: 3286}
     - Class: 114
-      Script: {instanceID: 3442}
+      Script: {instanceID: 3310}
     - Class: 114
-      Script: {instanceID: 3514}
+      Script: {instanceID: 3342}
     - Class: 114
-      Script: {instanceID: 3606}
+      Script: {instanceID: 3444}
     - Class: 114
-      Script: {instanceID: 3630}
+      Script: {instanceID: 3516}
     - Class: 114
-      Script: {instanceID: 3652}
+      Script: {instanceID: 3608}
     - Class: 114
-      Script: {instanceID: 3712}
+      Script: {instanceID: 3632}
     - Class: 114
-      Script: {instanceID: 3758}
+      Script: {instanceID: 3654}
     - Class: 114
-      Script: {instanceID: 3910}
+      Script: {instanceID: 3760}
     - Class: 114
-      Script: {instanceID: 3916}
+      Script: {instanceID: 3870}
     - Class: 114
-      Script: {instanceID: 4064}
+      Script: {instanceID: 3920}
     - Class: 114
-      Script: {instanceID: 4370}
+      Script: {instanceID: 4068}
     - Class: 114
-      Script: {instanceID: 22740}
+      Script: {instanceID: 4374}
+    - Class: 114
+      Script: {instanceID: 4450}
+    - Class: 114
+      Script: {instanceID: 4724}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -187,13 +177,13 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
-    - Class: 195
-      Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
     - Class: 198
       Script: {instanceID: 0}
     - Class: 199
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
@@ -686,6 +676,12 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
+      Hash: 4ce15e99c635d2567873d27549d1f16f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DisplayFPS
+  - hash:
+      serializedVersion: 2
       Hash: 76aef43e801605d1829c8805eeee135c
     assemblyName: Unity.InputSystem.dll
     namespaceName: UnityEngine.InputSystem
@@ -806,7 +802,7 @@ ScriptsOnlyBuild:
     className: XRSimpleInteractable
   - hash:
       serializedVersion: 2
-      Hash: 08d15c50dbdac3250b5809626af60e3a
+      Hash: ee1a39705283bb72bcfbd1cbf874166d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MovementProvider
@@ -894,6 +890,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.InputSystem.dll
     namespaceName: UnityEngine.InputSystem.Editor
     className: InputDebuggerWindow
+  - hash:
+      serializedVersion: 2
+      Hash: 69610a1bd685eaa8772ba44504d8df13
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DeveloperOption
   - hash:
       serializedVersion: 2
       Hash: 5d820a4b2d2a41b143640b8af1508079
@@ -1092,12 +1094,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.XR.Interaction.Toolkit.dll
     namespaceName: UnityEngine.XR.Interaction.Toolkit.UI
     className: XRUIInputModule
-  - hash:
-      serializedVersion: 2
-      Hash: 42ae280d85a8e3eb4625bbec9a49fed3
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Sword
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
