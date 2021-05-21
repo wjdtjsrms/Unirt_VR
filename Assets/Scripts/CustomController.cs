@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public enum HandState {NONE =0,RIGHT,LEFT };
+public enum HandState { NONE = 0, RIGHT, LEFT };
 public class CustomController : MonoBehaviour
 {
     // device 특성값을 담는 변수
@@ -24,7 +24,7 @@ public class CustomController : MonoBehaviour
     bool triggerButton; // 총알 단발 발사용 불리언
 
     public HandState currentHand; // 현재 오른손,왼손인지 알기 위한 변수
-
+    private bool isPressed = false;
     void Start()
     {
         TryInitiaiize();
@@ -51,17 +51,18 @@ public class CustomController : MonoBehaviour
 
         }
 
-        if(handGun != null) // 총 모델이 있다면 트리거 버튼이 눌렸을때 발사한다.
+        if (handGun != null) // 총 모델이 있다면 트리거 버튼이 눌렸을때 발사한다.
         {
             bool triggerButtonValue;
-            if(availableDevice.TryGetFeatureValue(CommonUsages.triggerButton,out triggerButtonValue) && triggerButtonValue)
+            if (availableDevice.TryGetFeatureValue(CommonUsages.triggerButton, out triggerButtonValue) && triggerButtonValue)
             {
-                if(triggerButton == false && currentHand == handGun.GetComponent<GunShoot>().currentGrab) // 트리거 버튼이 눌리지 않은 상태에서만 발사된다.
+
+                if (triggerButton == false && currentHand == handGun.GetComponent<GunShoot>().currentGrab) // 트리거 버튼이 눌리지 않은 상태에서만 발사된다.
                 {
                     handGun.GetComponent<GunShoot>().Shoot();
                     triggerButton = true;
                 }
-                
+
             }
             else
             {
@@ -69,7 +70,7 @@ public class CustomController : MonoBehaviour
             }
         }
 
-        if(true) // GameManager.Instance.isGameOver 테스트시에만
+        if (true) // GameManager.Instance.isGameOver 테스트시에만
         {
             bool menuButtonValue;
 
@@ -77,7 +78,7 @@ public class CustomController : MonoBehaviour
             {
                 GameManager.Instance.RestartGame();
             }
-         }
+        }
     }
 
     void TryInitiaiize()
@@ -85,22 +86,22 @@ public class CustomController : MonoBehaviour
         List<InputDevice> devices = new List<InputDevice>();
         InputDevices.GetDevicesWithCharacteristics(characteristics, devices);
 
-        foreach(var device in devices)
+        foreach (var device in devices)
         {
             Debug.Log($"Available Device Name : {device.name}, Characteristic  {device.characteristics}");
         }
-        if(devices.Count > 0)
+        if (devices.Count > 0)
         {
             availableDevice = devices[0];
             GameObject currentControllerModel;
 
             // Left 및 Right에 따라서 컨트롤의 손을 각각 설정
-            if(availableDevice.name.Contains("Left"))
+            if (availableDevice.name.Contains("Left"))
             {
                 currentControllerModel = controllerModels[1];
                 currentHand = HandState.LEFT;
             }
-            else if(availableDevice.name.Contains("Right"))
+            else if (availableDevice.name.Contains("Right"))
             {
                 currentControllerModel = controllerModels[2];
                 currentHand = HandState.RIGHT;
@@ -111,7 +112,7 @@ public class CustomController : MonoBehaviour
                 currentControllerModel = null;
                 currentHand = HandState.NONE;
             }
-            if(currentControllerModel)
+            if (currentControllerModel)
             {
                 controllerInstance = Instantiate(currentControllerModel, transform);
             }
@@ -130,8 +131,8 @@ public class CustomController : MonoBehaviour
     void UpdateHandAnimation()
     {
         // 컨트롤러의 trigger 값을 애니메이터의 trigger 값에 대입한다.
-      
-        if (availableDevice.TryGetFeatureValue(CommonUsages.trigger,out float triggerValue))
+
+        if (availableDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
         {
             handModelAnimator.SetFloat("Trigger", triggerValue);
         }
@@ -141,7 +142,7 @@ public class CustomController : MonoBehaviour
         }
 
         // 컨트롤러의 grip 값을 애니메이터의 grip 값에 대입한다.
-        if (availableDevice.TryGetFeatureValue(CommonUsages.grip,out float gripValue))
+        if (availableDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue))
         {
             handModelAnimator.SetFloat("Grip", gripValue);
         }
@@ -150,4 +151,25 @@ public class CustomController : MonoBehaviour
             handModelAnimator.SetFloat("Grip", 0);
         }
     }
+
+    public bool IsPrimaryButtonPressed() // X,A 버튼이 눌렸는지 판독
+    {
+        bool primaryButtonValue;
+
+        if (availableDevice.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonValue) && primaryButtonValue)
+        {
+            if (isPressed == false)
+            {
+                isPressed = true;
+                return true;
+
+            }         
+        }
+        else
+        {
+            isPressed = false;
+        }
+        return false;
+    }
+
 }
